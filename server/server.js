@@ -13,7 +13,10 @@ const app = express();
 
 // Middleware
 app.use(express.json()); // parse JSON request body
-app.use(cors()); // enable CORS for frontend requests
+app.use(cors(
+  {origin: 'http://localhost:5173', credentials: true}
+
+)); // enable CORS for frontend requests
 
 app.use(cookieParser());
 
