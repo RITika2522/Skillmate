@@ -1,11 +1,13 @@
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/Navbar"
+import Banner from "@/components/Banner"
+import UsersList from "@/components/UsersList"
 
 export default function Home() {
   return (
     <div>
       <Navbar />
-      {/* Rest of your home content */}
-      <h1 className="pt-20 text-3xl font-bold text-center mt-10">Welcome to SkillMate</h1>
+      <Banner />
+      <UsersList />
     </div>
-  );
+  )
 }

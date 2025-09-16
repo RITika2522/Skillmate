@@ -32,7 +32,7 @@ export const loginUser = async (req, res) => {
     );
 
     // 5. Set cookie (httpOnly for security)
-    res.cookie("uid", token, {
+    res.cookie("accessToken", token, {
       httpOnly: true, // prevents client-side JS access
       secure: process.env.NODE_ENV === "production", // only https in production
       sameSite: "strict", // CSRF protection

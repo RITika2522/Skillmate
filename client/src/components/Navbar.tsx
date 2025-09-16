@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useNavigate } from "react-router-dom"; // <-- for navigation
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -17,15 +18,28 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { User, Plus, Search } from "lucide-react";
+import axios from "axios";
 
 export default function Navbar() {
   const [postTitle, setPostTitle] = useState("");
   const [postContent, setPostContent] = useState("");
+  const navigate = useNavigate();
 
   const handlePostSubmit = () => {
     console.log("New Post:", { postTitle, postContent });
     setPostTitle("");
     setPostContent("");
+  };
+
+  const handleLogout = async () => {
+    try {
+      await axios.post("http://localhost:5000/api/users/logout", {}, { withCredentials: true });
+
+      // Redirect to login page after logout
+      navigate("/auth");
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
   };
 
   return (
@@ -86,9 +100,15 @@ export default function Navbar() {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuItem>Edit Profile</DropdownMenuItem>
-            <DropdownMenuItem>Settings</DropdownMenuItem>
-            <DropdownMenuItem className="text-red-600">Logout</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => navigate("/profile")}>
+              Edit Profile
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => navigate("/settings")}>
+              Settings
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={handleLogout} className="text-red-600">
+              Logout
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
