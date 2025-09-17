@@ -21,7 +21,7 @@ export default function UsersList() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/users") // backend API
+        const res = await fetch("http://localhost:5000/api/users/profile") // backend API
         if (!res.ok) throw new Error("Failed to fetch users")
         const data = await res.json()
         setUsers(data)
