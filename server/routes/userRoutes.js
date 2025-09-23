@@ -5,6 +5,9 @@ import { loginUser } from "../controllers/userLoginController.js";
 import { logoutUser } from "../controllers/userLogoutController.js";
 import { protect } from "../middlewares/authMiddleware.js";
 import { googleLogin, googleCallback } from "../controllers/googleController.js";
+import { getRandomUsers, getAllUsers } from "../controllers/userListController.js";
+import { updateUserProfile, getCurrentUser } from "../controllers/userUpdateController.js";
+import User from "../models/User.js";
 
 const router = express.Router();
 
@@ -17,10 +20,14 @@ router.post("/logout", logoutUser);
 router.get("/google", googleLogin);
 router.get("/google/callback", googleCallback);
 
-// 🔹 Protected route example
-router.get("/profile", protect, (req, res) => {
-  res.json({ message: "Profile data", user: req.user });
-});
+router.get("/random", getRandomUsers);
+router.get("/all", getAllUsers);
+
+// Get current user profile
+router.get("/me", protect, getCurrentUser);
+
+// Update user profile
+router.put("/update", protect, updateUserProfile);
 
 router.get("/", async (req, res) => {
   try {

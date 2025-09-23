@@ -3,7 +3,16 @@ import bcrypt from "bcryptjs";
 
 export const registerUser = async (req, res) => {
   try {
-    const { name, email, password, skills, bio, company, qualification } = req.body;
+    const {
+      name,
+      email,
+      password,
+      skills,
+      skillsToLearn, // ✅ add this
+      bio,
+      company,
+      qualification,
+    } = req.body;
 
     // 1. Validate required fields
     if (!name || !email || !password || !skills || skills.length === 0) {
@@ -26,6 +35,7 @@ export const registerUser = async (req, res) => {
       email,
       password: hashedPassword,
       skills,
+      skillsToLearn: skillsToLearn || [], // ✅ default to empty array
       bio,
       company,
       qualification,
@@ -41,6 +51,7 @@ export const registerUser = async (req, res) => {
         name: newUser.name,
         email: newUser.email,
         skills: newUser.skills,
+        skillsToLearn: newUser.skillsToLearn, // ✅ include in response
         bio: newUser.bio,
         company: newUser.company,
         qualification: newUser.qualification,

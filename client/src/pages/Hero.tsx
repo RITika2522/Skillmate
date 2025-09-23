@@ -8,6 +8,8 @@ import {
   CardContent,
 } from "@/components/ui/card";
 
+const API_URL = "http://skillmate.centralindia.cloudapp.azure.com:5000";
+
 const Hero: React.FC = () => {
   const navigate = useNavigate();
 

@@ -23,9 +23,17 @@ const userSchema = new mongoose.Schema(
       unique: true, 
       sparse: true 
     },
+
+    // ✅ Current skills
     skills: {
-      type: [String], // array of skills
+      type: [String],
       required: [true, "At least one skill is required"],
+    },
+
+    // ✅ Skills user wants to learn
+    skillsToLearn: {
+      type: [String],
+      default: [], // optional, starts empty
     },
 
     // Optional fields
@@ -43,7 +51,7 @@ const userSchema = new mongoose.Schema(
     },
   },
   {
-    timestamps: true, // automatically adds createdAt & updatedAt
+    timestamps: true,
   }
 );
 

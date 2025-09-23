@@ -11,6 +11,7 @@ dotenv.config();
 
 // Import routes & passport config
 import userRoutes from "./routes/userRoutes.js";
+import postRoutes from "./routes/postRoutes.js";
 import("./config/passport-setup.js"); // Google OAuth strategy
 
 const app = express();
@@ -22,7 +23,7 @@ app.use(cookieParser());
 // ✅ Enable CORS for frontend (React)
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "http://localhost:5173",
+    origin: process.env.CLIENT_URL || "http://skillmate.centralindia.cloudapp.azure.com:3000",
     credentials: true, // allow cookies
   })
 );
@@ -32,13 +33,14 @@ app.use(passport.initialize());
 
 // -------------------- Routes --------------------
 app.use("/api/users", userRoutes);
+app.use("/api/posts", postRoutes);
 
 // -------------------- MongoDB Connection --------------------
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;
 
 mongoose
-  .connect(MONGO_URI)
+  .connect(MONGO_URI || "mongodb://mongo:27017/skillmate")
   .then(() => {
     console.log("✅ Connected to MongoDB");
     app.listen(PORT, () =>

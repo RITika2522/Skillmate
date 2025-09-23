@@ -57,9 +57,11 @@ const GoogleIcon = (props: React.SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
+const API_URL = "http://skillmate.centralindia.cloudapp.azure.com:5000";
+
 // 🔹 Google Login Button
 const GoogleLoginButton = () => (
-  <a href="http://localhost:5000/api/users/google" className="w-full">
+  <a href={`${API_URL}/api/users/google`} className="w-full">
     <Button
       variant="outline"
       className="w-full flex items-center justify-center gap-2"
@@ -76,6 +78,7 @@ const Auth: React.FC = () => {
     email: "",
     password: "",
     skills: "",
+    skillsToLearn: "", // ✅ new field
   });
 
   const [tab, setTab] = useState("login");
@@ -89,10 +92,13 @@ const Auth: React.FC = () => {
   const handleRegister = async () => {
     try {
       const { data } = await axios.post(
-        "http://localhost:5000/api/users/register",
+        `${API_URL}/api/users/register`,
         {
           ...formData,
           skills: formData.skills.split(",").map((s) => s.trim()),
+          skillsToLearn: formData.skillsToLearn
+            .split(",")
+            .map((s) => s.trim()), // ✅ convert to array
         }
       );
       console.log("Registered:", data);
@@ -109,7 +115,7 @@ const Auth: React.FC = () => {
   const handleLogin = async () => {
     try {
       const { data } = await axios.post(
-        "http://localhost:5000/api/users/login",
+        `${API_URL}/api/users/login`,
         {
           email: formData.email,
           password: formData.password,
@@ -124,6 +130,30 @@ const Auth: React.FC = () => {
       console.error("Login error:", error.response?.data || error.message);
     }
   };
+
+  // 🔹 helper to render input fields with spacing
+  const renderInput = (
+    id: string,
+    name: string,
+    type: string,
+    value: string,
+    placeholder: string
+  ) => (
+    <div className="flex flex-col mb-4">
+      <Label htmlFor={id} className="mb-2">
+        {placeholder}
+      </Label>
+      <Input
+        id={id}
+        name={name}
+        type={type}
+        value={value}
+        onChange={handleChange}
+        placeholder={placeholder}
+        className="mt-1"
+      />
+    </div>
+  );
 
   return (
     <div className="flex items-center justify-center h-screen bg-gradient-to-br from-indigo-500 to-purple-700">
@@ -144,28 +174,14 @@ const Auth: React.FC = () => {
             {/* 🔹 Login Form */}
             <TabsContent value="login">
               <div className="space-y-4">
-                <div>
-                  <Label htmlFor="email">Email</Label>
-                  <Input
-                    id="email"
-                    name="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder="Enter your email"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="password">Password</Label>
-                  <Input
-                    id="password"
-                    name="password"
-                    type="password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    placeholder="Enter your password"
-                  />
-                </div>
+                {renderInput("email", "email", "email", formData.email, "Email")}
+                {renderInput(
+                  "password",
+                  "password",
+                  "password",
+                  formData.password,
+                  "Password"
+                )}
                 <Button className="w-full" onClick={handleLogin}>
                   Login
                 </Button>
@@ -185,50 +201,30 @@ const Auth: React.FC = () => {
             {/* 🔹 Register Form */}
             <TabsContent value="register">
               <div className="space-y-4">
-                <div>
-                  <Label htmlFor="name">Name</Label>
-                  <Input
-                    id="name"
-                    name="name"
-                    type="text"
-                    value={formData.name}
-                    onChange={handleChange}
-                    placeholder="Enter your name"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="email">Email</Label>
-                  <Input
-                    id="email"
-                    name="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder="Enter your email"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="password">Password</Label>
-                  <Input
-                    id="password"
-                    name="password"
-                    type="password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    placeholder="Enter your password"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="skills">Skills</Label>
-                  <Input
-                    id="skills"
-                    name="skills"
-                    type="text"
-                    value={formData.skills}
-                    onChange={handleChange}
-                    placeholder="e.g. React, Node, MongoDB"
-                  />
-                </div>
+                {renderInput("name", "name", "text", formData.name, "Name")}
+                {renderInput("email", "email", "email", formData.email, "Email")}
+                {renderInput(
+                  "password",
+                  "password",
+                  "password",
+                  formData.password,
+                  "Password"
+                )}
+                {renderInput(
+                  "skills",
+                  "skills",
+                  "text",
+                  formData.skills,
+                  "Skills (comma separated)"
+                )}
+                {renderInput(
+                  "skillsToLearn",
+                  "skillsToLearn",
+                  "text",
+                  formData.skillsToLearn,
+                  "Skills to Learn (comma separated)"
+                )}
+
                 <Button className="w-full" onClick={handleRegister}>
                   Register
                 </Button>
@@ -252,4 +248,3 @@ const Auth: React.FC = () => {
 };
 
 export default Auth;
-
