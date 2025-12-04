@@ -122,8 +122,8 @@ export default function UsersList() {
                          hover:bg-black hover:text-white hover:cursor-pointer"
             >
               <CardContent className="flex flex-col items-center justify-center h-full gap-4 py-8">
-                <p className="text-xl font-semibold text-center">Want to see more?</p>
-                <Button onClick={() => navigate("/mates")}>Meet More Mates</Button>
+                <p className="text-xl font-semibold text-center">Build your network</p>
+                <Button onClick={() => navigate("/mates")} className="bg-white text-black border border-transparent hover:border-white hover:bg-transparent hover:text-white transition-all duration-200">Meet More Mates</Button>
               </CardContent>
             </Card>
           </>

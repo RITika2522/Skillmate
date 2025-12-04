@@ -43,10 +43,9 @@ export default function Mates() {
 
   return (
     <>
-      {/* ✅ Navbar stays on top */}
       <Navbar />
 
-      <div className="p-8 pt-24">  {/* ⬅️ added pt-24 to push content below navbar */}
+      <div className="p-8 pt-24">  {/*added pt-24 to push content below navbar */}
       {/* Heading */}
       {/* <h2 className="text-3xl font-bold mb-8 text-center">Meet More Mates</h2> */}
 

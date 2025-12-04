@@ -5,6 +5,7 @@ import Auth from "./pages/Auth";
 import Home from "@/pages/Home";
 import Mates from "./pages/Mates";
 import EditProfile from "./pages/EditProfile";
+import Posts from "./pages/Posts";
 
 const App: React.FC = () => {
   return (
@@ -14,6 +15,7 @@ const App: React.FC = () => {
       <Route path="/home" element={<Home />} />
       <Route path="/mates" element={<Mates />} />
       <Route path="/profile" element={<EditProfile />} />
+      <Route path="/posts" element={<Posts />} />
     </Routes>
   );
 };

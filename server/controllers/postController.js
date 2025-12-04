@@ -38,3 +38,22 @@ export const getPosts = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+// @desc Get 5 random posts
+// @route GET /api/posts/random
+// @access Public
+export const getRandomPosts = async (req, res) => {
+  try {
+    const posts = await Post.aggregate([{ $sample: { size: 5 } }]);
+    const populated = await Post.populate(posts, {
+      path: "author",
+      select: "name profilePicture",
+    });
+
+    res.status(200).json(populated);
+  } catch (error) {
+    console.error("Error fetching random posts:", error.message);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
