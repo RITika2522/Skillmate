@@ -61,13 +61,13 @@ The application follows a **three-tier architecture**:
 
 ## 📂 Project Structure
 Skillmate/
-│
-├── frontend/ # Client-side application
-├── backend/ # Server-side logic and APIs
-├── devops/ # Docker, Kubernetes, CI/CD configs
-├── database/ # Database scripts/configuration
-├── .env # Environment variables
-└── README.md
+
+- frontend/ # Client-side application
+- backend/ # Server-side logic and APIs
+- devops/ # Docker, Kubernetes, CI/CD configs
+- database/ # Database scripts/configuration
+- .env # Environment variables
+- README.md
 
 
 ---
@@ -117,9 +117,13 @@ This project incorporates DevOps practices to improve consistency, automation, a
 Each service can be containerized for consistent environments.
 
 # Build Docker images
+``` bash
 docker build -t skillmate-backend ./backend
 docker build -t skillmate-frontend ./frontend
+```
 
 # Run containers
+```bash
 docker run -d -p 5000:5000 skillmate-backend
-docker run -d -p 3000:3000 skillmate-frontend
+docker run -d -p 3000:3000 skillmate-frontend 
+```
